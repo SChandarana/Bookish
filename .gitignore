@@ -1,5 +1,5 @@
 .vs/
-Bookish/bin
-Bookish/obj
+bin
+obj
 SQLDB/Data
 SQLDB/Logs
