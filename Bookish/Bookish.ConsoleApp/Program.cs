@@ -7,7 +7,7 @@ namespace Bookish.ConsoleApp
     {
         static void Main(string[] args)
         {
-            var library = new Library();
+            var library = new LibraryService();
             var books = library.GetBooks()
                 .Select(book => $"{book.isbn} - TITLE: {book.title} - AUTHORS: {book.authors}");
             Console.WriteLine(string.Join("\n", books));
