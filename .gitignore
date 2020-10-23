@@ -1,3 +1,5 @@
 .vs/
 Bookish/bin
 Bookish/obj
+SQLDB/Data
+SQLDB/Logs
