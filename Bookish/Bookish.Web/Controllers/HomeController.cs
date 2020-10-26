@@ -23,7 +23,12 @@ namespace Bookish.Web.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Catalogue()
+        {
+            return View();
+        }
+
+        public IActionResult Loans()
         {
             return View();
         }
