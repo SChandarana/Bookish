@@ -1,7 +1,32 @@
-﻿
+﻿@model Bookish.Web.Models.BookViewModel
 @{
-    ViewData["Title"] = "Book";
+    ViewData["Title"] = Model.Book.title;
 }
 
-<h1>Book</h1>
+<h1>@ViewData["Title"]</h1>
+<p>by @Model.Book.authors</p>
 
+<div>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Copy Number</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach (var bookCopy in Model.Book.bookCopies)
+        {
+            <tr>
+                <td>@(Model.Book.bookCopies.FindIndex(copy => copy == bookCopy) + 1)</td>
+                <td>
+                    <a class="btn btn-info @(bookCopy.username!=null ? "disabled" : "")"
+                       asp-action="Book"
+                       asp-route-isbn="@Model.Book.isbn">Borrow</a>
+                    @(bookCopy.username!=null ? $"UNAVAILABLE - borrowed by {bookCopy.username} and due: {bookCopy.dueDate:d}" : "")
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
