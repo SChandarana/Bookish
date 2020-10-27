@@ -6,6 +6,13 @@ using Dapper;
 
 namespace Bookish.DataAccess
 {
+    public interface ILibraryService
+    {
+        IEnumerable<Book> GetBooks();
+
+        Book GetCopies(string isbn);
+    }
+
     public class LibraryService : ILibraryService
     {
         private readonly IDbConnection databaseConnection;
@@ -18,11 +25,6 @@ namespace Bookish.DataAccess
         public IEnumerable<Book> GetBooks()
         {
             return databaseConnection.Query<Book>("SELECT * FROM Books");
-        }
-
-        public Book GetBook(string isbn)
-        {
-            return databaseConnection.QuerySingle<Book>($"SELECT * FROM Books WHERE isbn='{isbn}'");
         }
 
         public Book GetCopies(string isbn)
