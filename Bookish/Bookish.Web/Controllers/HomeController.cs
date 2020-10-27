@@ -12,13 +12,13 @@ namespace Bookish.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly LibraryService libraryService;
+        private readonly ILogger<HomeController> logger;
+        private readonly ILibraryService libraryService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ILibraryService libraryService)
         {
-            _logger = logger;
-            libraryService = new LibraryService();
+            this.logger = logger;
+            this.libraryService = libraryService;
         }
 
         public IActionResult Index()
@@ -26,11 +26,10 @@ namespace Bookish.Web.Controllers
             return View();
         }
 
-        [HttpGet]
         public IActionResult Catalogue()
         {
             var books = libraryService.GetBooks();
-            return View(new CatalogueModel(books));
+            return View(new CatalogueViewModel(books));
         }
 
         public IActionResult Loans()

@@ -1,4 +1,4 @@
-﻿@model Bookish.Web.Models.CatalogueModel
+﻿@model Bookish.Web.Models.CatalogueViewModel
 @{
     ViewData["Title"] = "Catalogue";
 }
@@ -24,7 +24,7 @@
                 <td>@book.authors</td>
                 <td>@book.isbn</td>
                 <td>
-                    @Html.ActionLink("Borrow","Book", "Home")
+                    <a type="button" class="btn btn-info" asp-controller="Home" asp-action="Book">Borrow</a>
                 </td>
             </tr>
         }

@@ -6,11 +6,11 @@ using Bookish.DataAccess;
 
 namespace Bookish.Web.Models
 {
-    public class CatalogueModel
+    public class CatalogueViewModel
     {
-        public IEnumerable<Book> Books { get; private set; }
+        public IEnumerable<Book> Books { get; }
 
-        public CatalogueModel(IEnumerable<Book> books)
+        public CatalogueViewModel(IEnumerable<Book> books)
         {
             Books = books;
         }

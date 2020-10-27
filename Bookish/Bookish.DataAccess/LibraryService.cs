@@ -5,7 +5,7 @@ using Dapper;
 
 namespace Bookish.DataAccess
 {
-    public class LibraryService
+    public class LibraryService : ILibraryService
     {
         private readonly IDbConnection databaseConnection = new SqlConnection("Server=localhost;Database=LibraryDB;Trusted_Connection=True;");
 
