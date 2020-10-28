@@ -7,7 +7,12 @@ namespace Bookish.DataAccess
 {
     public class LibraryService : ILibraryService
     {
-        private readonly IDbConnection databaseConnection = new SqlConnection("Server=localhost;Database=LibraryDB;Trusted_Connection=True;");
+        private readonly IDbConnection databaseConnection;
+
+        public LibraryService(IDbConnection connection)
+        {
+            databaseConnection = connection;
+        }
 
         public IEnumerable<Book> GetBooks()
         {
