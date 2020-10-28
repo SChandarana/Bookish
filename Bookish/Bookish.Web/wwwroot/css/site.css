@@ -70,10 +70,10 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
-#bookTable tr th:first-child {
+.bookTable tr th:first-child {
     width: 40%;
 }
 
-#bookTable tr th:last-child {
+.bookTable tr th:last-child {
     width: 60%;
 } 
