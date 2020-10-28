@@ -10,20 +10,20 @@
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
-                <th>Copy Number</th>
-                <th></th>
+                <th style="width: 40%">Copy Number</th>
+                <th style="width: 60%"></th>
             </tr>
         </thead>
 
         @foreach (var bookCopy in Model.Book.bookCopies)
         {
             <tr>
-                <td>@(Model.Book.bookCopies.FindIndex(copy => copy == bookCopy) + 1)</td>
+                <td>@bookCopy.bookId</td>
                 <td>
-                    <a class="btn btn-info @(bookCopy.username!=null ? "disabled" : "")"
+                    <a class="btn btn-info @Model.IsDisabled(bookCopy)"
                        asp-action="Book"
                        asp-route-isbn="@Model.Book.isbn">Borrow</a>
-                    @(bookCopy.username!=null ? $"UNAVAILABLE - borrowed by {bookCopy.username} and due: {bookCopy.dueDate:d}" : "")
+                    @Model.OwnedBy(bookCopy)
                 </td>
             </tr>
         }

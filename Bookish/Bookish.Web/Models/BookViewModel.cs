@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Bookish.DataAccess;
+﻿using Bookish.DataAccess;
 
 namespace Bookish.Web.Models
 {
@@ -13,6 +9,18 @@ namespace Bookish.Web.Models
         public BookViewModel(Book book)
         {
             Book = book;
+        }
+
+        public string IsDisabled(BookCopy copy)
+        {
+            return copy.username != null ? "disabled" : "";
+        }
+
+        public string OwnedBy(BookCopy copy)
+        {
+            return copy.username != null 
+                ? $"UNAVAILABLE - borrowed by {copy.username} and due: {copy.dueDate:d}" 
+                : "";
         }
     }
 }

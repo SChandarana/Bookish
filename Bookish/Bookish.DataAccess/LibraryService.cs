@@ -37,29 +37,25 @@ namespace Bookish.DataAccess
                 "LEFT JOIN Users ON Users.userId=Loans.userId " +
                 $"WHERE LibraryBooks.isbn='{isbn}';";
 
-            var bookDictionary = new Dictionary<string, Book>();
-
+            var outBook = new Book();
 
             var bookWithCopies = databaseConnection.Query<Book, BookCopy, Book>(
                     query,
                     (book, bookCopy) =>
                     {
-                        Book bookEntry;
-
-                        if (!bookDictionary.TryGetValue(book.isbn, out bookEntry))
+                        if (book.isbn != outBook.isbn)
                         {
-                            bookEntry = book;
-                            bookEntry.bookCopies = new List<BookCopy>();
-                            bookDictionary.Add(bookEntry.isbn, bookEntry);
+                            outBook = book;
+                            outBook.bookCopies = new List<BookCopy>();
                         }
 
-                        bookEntry.bookCopies.Add(bookCopy);
-                        return bookEntry;
+                        outBook.bookCopies.Add(bookCopy);
+                        return outBook;
                     },
                     splitOn: "bookId")
-                .Distinct()
-                .ToList();
-            return bookWithCopies.Single();
+                .FirstOrDefault();
+                
+            return bookWithCopies ?? new Book();
         }
     }
 }
