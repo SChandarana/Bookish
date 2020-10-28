@@ -9,7 +9,7 @@ namespace Bookish.DataAccess
 {
     public interface ILibraryService
     {
-        IEnumerable<Book> GetBooks();
+        IEnumerable<Book> GetBooks(string search);
 
         Book? GetCopies(string isbn);
     }
@@ -23,9 +23,9 @@ namespace Bookish.DataAccess
             databaseConnection = connection;
         }
 
-        public IEnumerable<Book> GetBooks()
+        public IEnumerable<Book> GetBooks(string search)
         {
-            return databaseConnection.Query<Book>("SELECT * FROM Books");
+            return databaseConnection.Query<Book>($"SELECT * FROM Books WHERE Books.title LIKE '%{search}%' OR Books.authors LIKE '%{search}%'");
         }
 
         public Book? GetCopies(string isbn)
