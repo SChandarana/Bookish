@@ -1,0 +1,35 @@
+﻿@model Bookish.Web.Models.CatalogueViewModel
+@{
+    ViewData["Title"] = "Catalogue";
+}
+
+<h1>Catalogue</h1>
+<p>These are all the books in our system</p>
+
+<div>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Title</th>
+            <th>Author(s)</th>
+            <th>ISBN</th>
+            <th></th>
+        </tr>
+        </thead>
+        
+        @foreach (var book in Model.Books)
+        {
+            <tr>
+                <td>@book.title</td>
+                <td>@book.authors</td>
+                <td>@book.isbn</td>
+                <td>
+                    <a type="button" class="btn btn-info" asp-action="Book">Borrow</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+
