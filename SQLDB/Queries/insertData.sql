@@ -1,12 +1,3 @@
-SET IDENTITY_INSERT dbo.Users ON
-INSERT INTO dbo.Users(userId, username)
-VALUES
-	(1, 'Shiv'),
-	(2, 'Benji'),
-	(3, 'Frank'),
-	(4, 'Frida');
-SET IDENTITY_INSERT dbo.Users OFF
-
 INSERT INTO dbo.Books(isbn, title, authors)
 VALUES
 	('978-1407104027', 'Invisible City', 'MG Harris'),
@@ -27,4 +18,4 @@ SET IDENTITY_INSERT dbo.LibraryBooks OFF
 
 INSERT INTO dbo.Loans(userId, bookId, dueDate)
 VALUES
-	(1, 1, '2020-10-28')
+	('13711e1b-cd06-4007-b0ae-dd4130457932', 1, '2020-10-28')

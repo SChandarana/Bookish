@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Bookish.DataAccess;
@@ -44,6 +46,7 @@ namespace Bookish.Web
                     .Build();
             });
             services.AddScoped<ILibraryService, LibraryService>();
+            services.AddScoped<IDbConnection>(_ => new SqlConnection(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
