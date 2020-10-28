@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Bookish.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -40,6 +39,10 @@ namespace Bookish.Web.Controllers
         public IActionResult Book(string isbn)
         {
             var book = libraryService.GetCopies(isbn);
+            if (book == null)
+            {
+                return RedirectToAction("Error");
+            }
             return View(new BookViewModel(book));
         }
 

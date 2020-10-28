@@ -11,14 +11,21 @@ namespace Bookish.Web.Models
             Book = book;
         }
 
-        public string IsDisabled(BookCopy copy)
+        public bool IsAvailable(BookCopy copy)
         {
-            return copy.username != null ? "disabled" : "";
+            return copy.username != null;
+        }
+
+        public string GetDisabledClass(BookCopy copy)
+        {
+            return IsAvailable(copy)
+                ? "disabled"
+                : "";
         }
 
         public string OwnedBy(BookCopy copy)
         {
-            return copy.username != null 
+            return IsAvailable(copy) 
                 ? $"UNAVAILABLE - borrowed by {copy.username} and due: {copy.dueDate:d}" 
                 : "";
         }

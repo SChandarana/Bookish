@@ -7,11 +7,11 @@
 <p>by @Model.Book.authors</p>
 
 <div>
-    <table class="table table-striped">
+    <table class="table table-striped" id="bookTable">
         <thead class="thead-dark">
             <tr>
-                <th style="width: 40%">Copy Number</th>
-                <th style="width: 60%"></th>
+                <th>Copy Number</th>
+                <th></th>
             </tr>
         </thead>
 
@@ -20,7 +20,7 @@
             <tr>
                 <td>@bookCopy.bookId</td>
                 <td>
-                    <a class="btn btn-info @Model.IsDisabled(bookCopy)"
+                    <a class="btn btn-info @Model.GetDisabledClass(bookCopy)"
                        asp-action="Book"
                        asp-route-isbn="@Model.Book.isbn">Borrow</a>
                     @Model.OwnedBy(bookCopy)

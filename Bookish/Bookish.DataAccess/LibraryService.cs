@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Bookish.DataAccess
     {
         IEnumerable<Book> GetBooks();
 
-        Book GetCopies(string isbn);
+        Book? GetCopies(string isbn);
     }
 
     public class LibraryService : ILibraryService
@@ -27,35 +28,30 @@ namespace Bookish.DataAccess
             return databaseConnection.Query<Book>("SELECT * FROM Books");
         }
 
-        public Book GetCopies(string isbn)
+        public Book? GetCopies(string isbn)
         {
             var query =
-                "SELECT LibraryBooks.isbn, Books.title, Books.authors, LibraryBooks.bookId, Users.username, Loans.dueDate " +
+                "SELECT LibraryBooks.isbn, Books.title, Books.authors, LibraryBooks.bookId, AspNetUsers.UserName, Loans.dueDate " +
                 "FROM LibraryBooks " +
                 "JOIN Books ON LibraryBooks.isbn=Books.isbn " +
                 "LEFT JOIN Loans ON LibraryBooks.bookId=Loans.bookId " +
-                "LEFT JOIN Users ON Users.userId=Loans.userId " +
+                "LEFT JOIN AspNetUsers ON AspNetUsers.Id=Loans.userId " +
                 $"WHERE LibraryBooks.isbn='{isbn}';";
 
-            var outBook = new Book();
+            Book? outBook = null;
 
             var bookWithCopies = databaseConnection.Query<Book, BookCopy, Book>(
                     query,
                     (book, bookCopy) =>
                     {
-                        if (book.isbn != outBook.isbn)
-                        {
-                            outBook = book;
-                            outBook.bookCopies = new List<BookCopy>();
-                        }
-
+                        outBook ??= book;
                         outBook.bookCopies.Add(bookCopy);
                         return outBook;
                     },
                     splitOn: "bookId")
                 .FirstOrDefault();
                 
-            return bookWithCopies ?? new Book();
+            return bookWithCopies;
         }
     }
 }

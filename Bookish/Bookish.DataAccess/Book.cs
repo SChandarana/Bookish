@@ -8,6 +8,6 @@ namespace Bookish.DataAccess
         public string isbn { get; set; }
         public string title { get; set; }
         public string authors { get; set; }
-        public List<BookCopy> bookCopies { get; set; }
+        public List<BookCopy> bookCopies { get; set;} = new List<BookCopy>();
     }
 }
