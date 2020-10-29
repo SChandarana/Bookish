@@ -25,7 +25,7 @@ namespace Bookish.Web.Controllers
             return View();
         }
 
-        public IActionResult Catalogue(string search="")
+        public IActionResult Catalogue(string search = "")
         {
             var books = libraryService.GetBooks(search);
             return View(new CatalogueViewModel(books, search));

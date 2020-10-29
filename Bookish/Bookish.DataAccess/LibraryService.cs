@@ -25,7 +25,8 @@ namespace Bookish.DataAccess
 
         public IEnumerable<Book> GetBooks(string search)
         {
-            return databaseConnection.Query<Book>($"SELECT * FROM Books WHERE Books.title LIKE '%{search}%' OR Books.authors LIKE '%{search}%'");
+            var sql = "SELECT * FROM Books WHERE Books.title LIKE @searchString OR Books.authors LIKE @searchString";
+            return databaseConnection.Query<Book>(sql, new{searchString = "%" + search + "%"});
         }
 
         public Book? GetCopies(string isbn)
