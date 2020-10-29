@@ -1,7 +1,32 @@
-﻿
+﻿@model Bookish.Web.Models.BookViewModel
 @{
-    ViewData["Title"] = "Book";
+    ViewData["Title"] = Model.Book.title;
 }
 
-<h1>Book</h1>
+<h1>@ViewData["Title"]</h1>
+<p>by @Model.Book.authors</p>
 
+<div>
+    <table class="table table-striped bookTable">
+        <thead class="thead-dark">
+            <tr>
+                <th>Copy Number</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach (var bookCopy in Model.Book.bookCopies)
+        {
+            <tr>
+                <td>@bookCopy.bookId</td>
+                <td>
+                    <a class="btn btn-info @Model.GetDisabledClass(bookCopy)"
+                       asp-action="Book"
+                       asp-route-isbn="@Model.Book.isbn">Borrow</a>
+                    @Model.OwnedBy(bookCopy)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
