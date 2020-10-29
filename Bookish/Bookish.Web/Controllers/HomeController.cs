@@ -25,10 +25,10 @@ namespace Bookish.Web.Controllers
             return View();
         }
 
-        public IActionResult Catalogue(string search = "")
+        public IActionResult Catalogue(string searchTerm = "")
         {
-            var books = libraryService.GetBooks(search);
-            return View(new CatalogueViewModel(books, search));
+            var books = libraryService.GetBooks(searchTerm);
+            return View(new CatalogueViewModel(books, searchTerm));
         }
 
         public IActionResult Loans()
