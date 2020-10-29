@@ -9,10 +9,12 @@ namespace Bookish.Web.Models
     public class CatalogueViewModel
     {
         public IEnumerable<Book> Books { get; }
+        public string SearchTerm { get; }
 
-        public CatalogueViewModel(IEnumerable<Book> books)
+        public CatalogueViewModel(IEnumerable<Book> books, string searchTerm)
         {
             Books = books;
+            SearchTerm = searchTerm;
         }
     }
 }

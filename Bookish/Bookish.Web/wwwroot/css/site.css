@@ -77,3 +77,7 @@ body {
 .bookTable tr th:last-child {
     width: 60%;
 } 
+
+.padded-top {
+    padding-top: 15px;
+}

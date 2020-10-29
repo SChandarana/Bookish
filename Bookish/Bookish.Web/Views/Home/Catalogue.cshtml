@@ -6,7 +6,15 @@
 <h1>Catalogue</h1>
 <p>These are all the books in our system</p>
 
-<div>
+
+<form asp-action="Catalogue">
+    <div class="input-group">
+        <input class="form-control" type="text" name="searchTerm" placeholder="Search..." value="@Model.SearchTerm" />
+        <button type="submit" class="btn btn-primary">Go!</button>
+    </div>
+</form>
+
+<div class="padded-top">
     <table class="table table-striped">
         <thead class="thead-dark">
         <tr>
