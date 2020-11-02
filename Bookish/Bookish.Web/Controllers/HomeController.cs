@@ -46,6 +46,25 @@ namespace Bookish.Web.Controllers
             return View(new BookViewModel(book));
         }
 
+        public IActionResult AddBook(string isbn = "", string title = "", string authors = "", int copies = 1)
+        {
+            return View(new AddBookViewModel(isbn, title, authors, copies, libraryService.BookExists(isbn)));
+        }
+
+        [HttpPost]
+        public IActionResult AddBookPost(string title, string authors, string isbn, int copies)
+        {
+            var isbnError = libraryService.BookExists(isbn);
+            var copyError = copies < 1;
+            if (isbnError || copyError)
+            {
+                return RedirectToAction("AddBook", new { isbn, title, authors, copies });
+            }
+            
+            libraryService.AddBook(isbn, title, authors, copies);
+            return RedirectToAction("Catalogue");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
