@@ -1,0 +1,21 @@
+﻿@model Bookish.Web.Models.CatalogueViewModel
+
+@if (Model.TotalPages > 1)
+{
+    <nav>
+        <ul class="pagination">
+            <li class="page-item @Model.GetDisabledPrevious()">
+                <a class="page-link" asp-action="Catalogue" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-searchTerm="@Model.SearchTerm">Previous</a>
+            </li>
+            @for (var i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(Model.GetActiveClass(i))">
+                    <a class="page-link" asp-action="Catalogue" asp-route-pageNumber="@i" asp-route-searchTerm="@Model.SearchTerm">@i</a>
+                </li>
+            }
+            <li class="page-item @Model.GetDisabledNext()">
+                <a class="page-link" asp-action="Catalogue" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-searchTerm="@Model.SearchTerm">Next</a>
+            </li>
+        </ul>
+    </nav>
+}

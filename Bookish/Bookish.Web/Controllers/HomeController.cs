@@ -24,11 +24,11 @@ namespace Bookish.Web.Controllers
         {
             return View();
         }
-
-        public IActionResult Catalogue(string searchTerm = "")
+        
+        public IActionResult Catalogue(string searchTerm = "", int pageNumber = 1)
         {
             var books = libraryService.GetBooks(searchTerm);
-            return View(new CatalogueViewModel(books, searchTerm));
+            return View(new CatalogueViewModel(books, searchTerm, pageNumber));
         }
 
         public IActionResult Loans()

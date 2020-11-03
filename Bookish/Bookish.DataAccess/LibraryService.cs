@@ -29,7 +29,7 @@ namespace Bookish.DataAccess
         public IEnumerable<Book> GetBooks(string searchTerm)
         {
             var sql = "SELECT * FROM Books WHERE Books.title LIKE @searchString OR Books.authors LIKE @searchString ORDER BY Books.title ASC;";
-            return databaseConnection.Query<Book>(sql, new {searchString = $"%{searchTerm}%"});
+            return databaseConnection.Query<Book>(sql, new { searchString = $"%{searchTerm}%" });
         }
 
         public Book? GetCopies(string isbn)
