@@ -46,6 +46,7 @@ namespace Bookish.Web
                     .Build();
             });
             services.AddScoped<ILibraryService, LibraryService>();
+            services.AddScoped<IBarcodeService, BarcodeService>();
             services.AddScoped<IDbConnection>(_ => new SqlConnection(Configuration.GetConnectionString("DefaultConnection")));
         }
 

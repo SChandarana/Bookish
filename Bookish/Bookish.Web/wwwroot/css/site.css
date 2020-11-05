@@ -70,14 +70,23 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
-.bookTable tr th:first-child {
+.book-table tr th:first-child {
     width: 40%;
 }
 
-.bookTable tr th:last-child {
+.book-table tr th:last-child {
     width: 60%;
 } 
 
 .padded-top {
     padding-top: 15px;
+}
+
+.center {
+    display: block;
+    margin: auto;
+}
+
+.center-text {
+    text-align: center;
 }

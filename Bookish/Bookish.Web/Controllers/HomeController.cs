@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using Bookish.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Bookish.Web.Models;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Bookish.Web.Controllers
 {
@@ -13,11 +16,15 @@ namespace Bookish.Web.Controllers
     {
         private readonly ILogger<HomeController> logger;
         private readonly ILibraryService libraryService;
+        private readonly IWebHostEnvironment webEnvironment;
+        private readonly IBarcodeService barcodeService;
 
-        public HomeController(ILogger<HomeController> logger, ILibraryService libraryService)
+        public HomeController(ILogger<HomeController> logger, ILibraryService libraryService, IWebHostEnvironment webEnvironment, IBarcodeService barcodeService)
         {
             this.logger = logger;
             this.libraryService = libraryService;
+            this.webEnvironment = webEnvironment;
+            this.barcodeService = barcodeService;
         }
 
         public IActionResult Index()
@@ -55,14 +62,20 @@ namespace Bookish.Web.Controllers
         public IActionResult AddBookPost(string title, string authors, string isbn, int copies)
         {
             var isbnError = libraryService.BookExists(isbn);
-            var copyError = copies < 1;
-            if (isbnError || copyError)
+            if (isbnError)
             {
                 return RedirectToAction("AddBook", new { isbn, title, authors, copies });
             }
             
             libraryService.AddBook(isbn, title, authors, copies);
-            return RedirectToAction("Catalogue");
+            return RedirectToAction("AddedBook", new { isbn });
+        }
+
+        public IActionResult AddedBook(string isbn)
+        {
+            var imageFolder = Path.Combine(webEnvironment.WebRootPath, "images", "barcodes");
+            var newCopies = barcodeService.GetNewCopiesWithBarcodes(isbn, imageFolder);
+            return View(new AddedBookViewModel(newCopies));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

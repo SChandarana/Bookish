@@ -1,6 +1,9 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using Dapper;
 
@@ -15,6 +18,8 @@ namespace Bookish.DataAccess
         void AddBook(string isbn, string title, string authors, int copies);
 
         bool BookExists(string isbn);
+
+        IEnumerable<NewCopy> GetNewCopies(string isbn);
     }
 
     public class LibraryService : ILibraryService
@@ -37,9 +42,9 @@ namespace Bookish.DataAccess
             var query =
                 "SELECT LibraryBooks.isbn, Books.title, Books.authors, LibraryBooks.bookId, AspNetUsers.UserName, Loans.dueDate " +
                 "FROM LibraryBooks " +
-                "JOIN Books ON LibraryBooks.isbn=Books.isbn " +
-                "LEFT JOIN Loans ON LibraryBooks.bookId=Loans.bookId " +
-                "LEFT JOIN AspNetUsers ON AspNetUsers.Id=Loans.userId " +
+                "JOIN Books ON LibraryBooks.isbn = Books.isbn " +
+                "LEFT JOIN Loans ON LibraryBooks.bookId = Loans.bookId " +
+                "LEFT JOIN AspNetUsers ON AspNetUsers.Id = Loans.userId " +
                 $"WHERE LibraryBooks.isbn='{isbn}';";
 
             Book? outBook = null;
@@ -85,6 +90,17 @@ namespace Bookish.DataAccess
         {
             var sql = "SELECT * FROM Books WHERE Books.isbn = @isbn";
             return databaseConnection.Query<Book>(sql, new { isbn }).Any();
+        }
+
+        public IEnumerable<NewCopy> GetNewCopies(string isbn)
+        {
+            var sql = 
+                "SELECT LibraryBooks.bookId, Books.title " + 
+                "FROM LibraryBooks " +
+                "JOIN Books ON LibraryBooks.isbn = Books.isbn " +
+                "WHERE LibraryBooks.isbn = @isbn";
+
+            return databaseConnection.Query<NewCopy>(sql, new { isbn });
         }
     }
 }

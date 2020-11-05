@@ -1,0 +1,12 @@
+﻿@model Bookish.Web.Models.AddedBookViewModel
+@{
+    ViewData["Title"] = "AddedBook";
+}
+
+<h1 class="center-text">@Model.NewCopies.First()?.title has been successfully added!</h1>
+<h3 class="center-text">Here are your barcodes</h3>
+
+@foreach (var newCopy in Model.NewCopies)
+{
+    <img src="@($"../images/barcodes/barcode{newCopy.bookId}.png")" class="padded-top center"/>
+}

@@ -11,7 +11,7 @@ namespace Bookish.Web.Models
         public string Title { get; }
         public string Authors { get; }
         public int Copies { get; }
-        public IEnumerable<string> ErrorMessage { get; }
+        public string ErrorMessage { get; }
 
         public AddBookViewModel(string isbn, string title, string authors, int copies, bool isbnError)
         {
@@ -19,25 +19,7 @@ namespace Bookish.Web.Models
             Title = title;
             Authors = authors;
             Copies = copies;
-            ErrorMessage = CreateErrorMessage(isbnError);
-
-        }
-
-        private IEnumerable<string> CreateErrorMessage(bool isbnError)
-        {
-            var errorMessage = new List<string>();
-
-            if (Copies < 1)
-            {
-                errorMessage.Add("Must add at least one copy");
-            }
-
-            if (isbnError)
-            {
-                errorMessage.Add("That ISBN has already been used");
-            }
-
-            return errorMessage;
+            ErrorMessage = isbnError ? "ISBN already used" : "";
         }
     }
 }
